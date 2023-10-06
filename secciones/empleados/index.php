@@ -1,6 +1,12 @@
-<?php include("../../templat/header.php"); ?>
+<?php include("../../templat/header.php"); 
+    include("../../db.php");
+    $sentecia = $conexion->prepare("SELECT * FROM `tbl_empleados`");
+    $sentecia->execute();
+    $lista_tbl_empleados = $sentecia->fetchAll(PDO::FETCH_ASSOC);
+    print_r($lista_tbl_empleados)
+?>
 <hr />
-<h3 class=" text-center p-3"> Empleados</h3>
+<h3 class="text-center p-3"> Empleados</h3>
 <div class="card">
     <div class="card-header">
 
@@ -23,12 +29,20 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php 
+                        foreach ($lista_tbl_empleados as $registro){
+                    ?>
                     <tr class="">
-                        <td scope="row">Yonatan llanto</td>
-                        <td>image.png</td>
-                        <td>CV.pdf</td>
-                        <td>Programador Sr.</td>
-                        <td>12/12/2019</td>
+                        <td scope="row"><?php   
+                       echo $registro['primernombre'] ." ". 
+                        $registro['segundonombre'] ." ". 
+                        $registro['primerapellido'] ." ". 
+                        $registro['segundoapellido'] 
+                        ?></td>
+                        <td><?php echo $registro['foto']  ?></td>
+                        <td><?php echo $registro['cv']  ?></td>
+                        <td><?php echo $registro['idpuesto']  ?></td>
+                        <td><?php echo $registro['fechadeingreso']  ?></td>
                         <td>
                             <a name="" id="" class="btn btn-success" href="#" role="button">
                                 Save
@@ -41,6 +55,8 @@
                             </a>
                         </td>
                     </tr>
+                    <?php }
+                    ?>
                 </tbody>
             </table>
         </div>

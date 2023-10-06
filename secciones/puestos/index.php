@@ -1,11 +1,23 @@
 <?php
 include("../../db.php");
-$sentencia = $conexion->prepare("SELECT * FROM `tbl_puestos`");
+
+
+if (isset($_GET['txtID'])) {
+    $txtID = (isset($_GET['txtID']))?$_GET['txtID']:"";
+
+    $sentencia = $conexion->prepare("DELETE FROM tbl_puestos WHERE id=:id");
+
+    $sentencia->bindParam(":id", $txtID);
+    $sentencia->execute();
+    header("Location:index.php");
+}
+
+
+$sentencia = $conexion->prepare("SELECT * FROM `tbl_puestos` ");
 $sentencia->execute();
 $lista_tbl_puestos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
-
-print_r($lista_tbl_puestos)
 ?>
+
 <?php include("../../templat/header.php"); ?>
 <hr />
 
@@ -28,11 +40,12 @@ print_r($lista_tbl_puestos)
                     foreach ($lista_tbl_puestos as $resgistro) {
                     ?>
                         <tr class="">
-                            <td scope="row"><?php echo $resgistro['id']?></td>
-                            <td><?php echo $resgistro['nombredelpuesto']?></td>
+                            <td scope="row"><?php echo $resgistro['id'] ?></td>
+                            <td><?php echo $resgistro['nombredelpuesto'] ?></td>
                             <td>
-                                <input name="btneditar" id="btneditar" class="btn btn-success" type="button" value="Update">
-                                <input name="btnborrar" id="btnborrar" class="btn btn-danger" type="button" value="Delete">
+                                <a name="btneditar" id="btneditar" class="btn btn-success" href="#" role="button">Update</a>
+                                <a name="btneditar" id="btneditar" class="btn btn-danger" href="index.php?txtID=<?php echo $resgistro['id']; ?>" role="button">Delete</a>
+
                             </td>
                         </tr>
                     <?php } ?>
