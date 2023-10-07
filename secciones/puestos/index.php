@@ -3,7 +3,7 @@ include("../../db.php");
 
 
 if (isset($_GET['txtID'])) {
-    $txtID = (isset($_GET['txtID']))?$_GET['txtID']:"";
+    $txtID = (isset($_GET['txtID'])) ? $_GET['txtID'] : "";
 
     $sentencia = $conexion->prepare("DELETE FROM tbl_puestos WHERE id=:id");
 
@@ -43,8 +43,8 @@ $lista_tbl_puestos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                             <td scope="row"><?php echo $resgistro['id'] ?></td>
                             <td><?php echo $resgistro['nombredelpuesto'] ?></td>
                             <td>
-                                <a name="btneditar" id="btneditar" class="btn btn-success" href="#" role="button">Update</a>
-                                <a name="btneditar" id="btneditar" class="btn btn-danger" href="index.php?txtID=<?php echo $resgistro['id']; ?>" role="button">Delete</a>
+                            <a name="btneditar" id="btneditar" class="btn btn-info" href="editar.php?txtID=<?php echo $resgistro['id']; ?>" role="button">Update</a>
+                            <a name="btneditar" id="btneditar" class="btn btn-danger" href="index.php?txtID=<?php echo $resgistro['id']; ?>" role="button">Delete</a>
 
                             </td>
                         </tr>
